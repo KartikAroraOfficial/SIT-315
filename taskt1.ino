@@ -5,7 +5,7 @@ const byte temperature = A2;
 
 void setup()
 {
-  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);
   pinMode(temperature, INPUT);
   Serial.begin(9600);
 }
@@ -24,9 +24,9 @@ void loop()
   Serial.println(temp);
   
   if(temp>30){
-  	digitalWrite(11, HIGH);
+  	digitalWrite(12, HIGH);
     delay(1000);
-    digitalWrite(11, LOW);
+    digitalWrite(12, LOW);
     
   }
 }
