@@ -141,9 +141,6 @@ for (int i = 0; i < 10000000; ++i)
     auto elapsed_time_sec = std::chrono::duration_cast<std::chrono::duration<double>>(end_time - start_time).count();
     std::cout << "Time taken: " << elapsed_time_sec * 1000000 << " microseconds" << std::endl;
 
-    // double duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-    // std::cout << "Time taken: " << duration_ms << " ms" << std::endl;
-
     // Print the results
     // #pragma omp parallel for
     // for (int i = 0; i < clusters.size(); ++i)
