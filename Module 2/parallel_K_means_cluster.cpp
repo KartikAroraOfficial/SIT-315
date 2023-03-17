@@ -119,45 +119,6 @@ std::vector<Cluster> k_means_clustering(const std::vector<Point> &points, int k,
     return clusters;
 }
 
-// // Main function to test the K-means clustering algorithm
-// int main()
-// {
-//     // Generate some random points
-//     std::vector<Point> points;
-//     for (double i = 0; i < 10000; ++i)
-//     {
-//         points.emplace_back(i, i);
-//     }
-
-//     // Run the K-means clustering algorithm with k=4 and maximum iterations=10
-//     int k = 4;
-//     int max_iterations = 10;
-//     auto start_time = std::chrono::high_resolution_clock::now();
-//     std::vector<Cluster> clusters = k_means_clustering(points, k, max_iterations);
-//     auto end_time = std::chrono::high_resolution_clock::now();
-
-//     auto elapsed_time_sec = std::chrono::duration_cast<std::chrono::duration<double>>(end_time - start_time).count();
-//     std::cout << "Time taken: " << elapsed_time_sec * 1000000 << " micro seconds" << std::endl;
-
-//     // Print the results
-//     for (int i = 0; i < clusters.size(); ++i)
-//     {
-//         std::cout << "Cluster " << i << " centroid: (" << clusters[i].centroid.x << ", " << clusters[i].centroid.y << ")" 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Main function to test the K-means clustering algorithm
 int main()
 {
