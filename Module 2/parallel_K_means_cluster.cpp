@@ -119,6 +119,7 @@ std::vector<Cluster> k_means_clustering(const std::vector<Point> &points, int k,
     return clusters;
 }
 
+
 // Main function to test the K-means clustering algorithm
 int main()
 {
