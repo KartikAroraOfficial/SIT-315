@@ -123,13 +123,12 @@ std::vector<Cluster> k_means_clustering(const std::vector<Point> &points, int k,
 int main()
 {
     // Generate some random points
-std::vector<Point> points(10000000);
+    std::vector<Point> points(10000000);
 #pragma omp parallel for
-for (int i = 0; i < 10000000; ++i)
-{
-    points[i] = Point(i, i);
-}
-
+    for (int i = 0; i < 10000000; ++i)
+    {
+        points[i] = Point(i, i);
+    }
 
     // Run the K-means clustering algorithm with k=4 and maximum iterations=10
     int k = 4;
