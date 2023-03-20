@@ -1,79 +1,63 @@
-#include "PinChangeInt.h"
-
-//Buttons: 1, 2 and 3 pins are defined. Furthermode, led pin 13 is also defined
-const byte SLIDER = 2;
-const byte BUTTON_2 = 3;
-const byte BUTTON_3 = 4;
-const int led = PB5;
-
-//timer compare values are setup
-
-const uint16_t t1_load = 0;
-const uint16_t t1_compare = 15625; // A second long timer with 1024 scaler value
+uint8_t LedState = LOW;
+int timer1_compare_match;
 
 void setup() {
-    //Serial communication value
-    Serial.begin(9600);
-    //Pin modes are defined
-    pinMode(SLIDER, INPUT);
-    pinMode(BUTTON_2, INPUT);
-    pinMode(BUTTON_3, INPUT);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);      
+  pinMode(4, INPUT_PULLUP);
+  pinMode(13, OUTPUT);
 
-    //setting the led pinmode as output
-    DDRB |= (1 << led);
+  attachInterrupt(digitalPinToInterrupt(2), RedLedOn, RISING);
+  attachInterrupt(digitalPinToInterrupt(3), GreenLedOn, FALLING);
 
-    //Three external interrupts, each for every button
-    attachInterrupt(digitalPinToInterrupt(PIR), Interrupt1, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(ROTARTY), Interrupt2, RISING);
-    attachPinChangeInterrupt(BUTTON, Interrupt3, RISING);
+  PCICR |= B00000001;
+  co
+  PCMSK0 |= B00000001;
+  
+  TCCR1A = 0;
+  TCCR1B = 0;
+  timer1_compare_match = 31249;
+  TCNT1 = timer1_compare_match;
+  TCCR1B |= (1 << CS12);
+  TIMSK1 |= (1 << OCIE1A);
 
-    reset timer1 control register A to its default value 
-    TCCR1A = 0;
+  Serial.begin(9600);
+  // put your setup code here, to run once:
 
-    // Clear on compare
-    TCCR1B &= ~(1 << WGM13);
-    TCCR1B |= (1 << WGM12);
-
-    // setting the prescaler value to 1024
-    TCCR1B |= (1 << CS12);  // 1
-    TCCR1B &= ~(1 << CS11); // 0
-    TCCR1B |= (1 << CS10);  // 1
-
-    //setting timer and compare values
-    TCNT1 = t1_load;
-    OCR1A = t1_compare;
-
-    //enable timer1 interrupt
-    TIMSK1 = (1 << OCIE1A);
-
-    //enable all global interrupts
-    sei();
 }
 
 void loop() {
-    delay(100);
+
+  // put your main code here, to run repeatedly:
 
 }
 
-// Interrupt service routine --- handles the timer internal interrupt
-
-ISR(TIMER1_COMPA_vect) {
-    PORTB ^= (1 << led);
+void RedLedOn()
+{
+  Serial.println("Change have been detected by Motion sensor");
+  LedState = !LedState;
+  digitalWrite(13, LedState);
 }
 
-void Interrupt1() {
-
-    Serial.println("");
-    Serial.println("Detected: Interrupt 1");
+void GreenLedOn()
+{
+  Serial.println("Button 1 have been pressed.");
+  LedState = !LedState;
+  digitalWrite(13, LedState);
 }
 
-void Interrupt2() {
-    Serial.println("");
-    delay(100);
-    Serial.println("Detected: Interrupt 2");
+ISR (PCINT0_vect)
+{
+  
+  if(digitalRead(8) == LOW){
+  Serial.println("Button 2 have been pressed.");
+  LedState = !LedState;
+  digitalWrite(13, LedState);
+  }
 }
 
-void Interrupt3() {
-    Serial.println("");
-    Serial.println("Detected: Interrupt 3");
+ISR(TIMER1_COMPA_vect)
+{
+  TCNT1 = timer1_compare_match;
+  digitalWrite(13, digitalRead(13) ^ 1);
 }
