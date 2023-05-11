@@ -99,7 +99,7 @@ std::vector<Cluster> k_means_clustering(const std::vector<Point> &points, int k,
         }
         if (converged)
         {
-            break; 
+            break;
         }
     }
     return clusters;
@@ -109,9 +109,9 @@ std::vector<Cluster> k_means_clustering(const std::vector<Point> &points, int k,
 int main()
 {
     // Generate some random points
-    std::vector<Point> points(10000000);
+    std::vector<Point> points(100000);
 
-    for (int i = 0; i < 10000000; ++i)
+    for (int i = 0; i < 100000; ++i)
     {
         points[i] = Point(i, i);
     }
@@ -125,7 +125,7 @@ int main()
     // End timing
     auto end_time = std::chrono::high_resolution_clock::now();
 
-    // Print the time taken 
+    // Print the time taken
     auto elapsed_time_sec = std::chrono::duration_cast<std::chrono::duration<double>>(end_time - start_time).count();
     std::cout << "Time taken: " << elapsed_time_sec * 1000000 << " microseconds" << std::endl;
 
